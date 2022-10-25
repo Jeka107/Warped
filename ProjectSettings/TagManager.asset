@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - CinemachineTarget
+  - Draggable
+  - BlackHole
+  - Wall
+  - GravitationalRadius
+  - Shoot
+  - GM
+  - StopMoving
+  - Collectable
+  - PlayerRadius
+  - ConsumeCollectable
+  - Useable
+  - AttackCollectable
+  - Ground
+  - Enemy
+  - PlayerWeapon
+  - EnemyWeapon
+  - Wearable
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Player
+  - Ground
+  - Quest
+  - Door
+  - Draggable
+  - ItemHold
+  - Enemy
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
