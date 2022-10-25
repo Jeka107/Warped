@@ -14,7 +14,7 @@ Text appearance and object on button press action.
 
 Player's skills.
 
-Collectibles and their use like for example weapons.
+Collectibles and their use , for example weapons.
 
 Inventory system.
 
