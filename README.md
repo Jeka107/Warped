@@ -16,7 +16,7 @@ Player's skills.
 
 Collectibles and their use , for example weapons.
 
-Inventory system.
+Inventory system and Inventory UI.
 
 Quest system with differnt types of quest.
 
