@@ -24,4 +24,4 @@ Monster UI with use of range and Nav Mesh Agent.
 
 Combat system.
 
-Animation and timelines.
+Took part in animations and timelines.
