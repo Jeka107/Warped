@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99d55e5e40051db41879287a2023a689, type: 3}
+  m_Name: Quest 8 A
+  m_EditorClassIdentifier: 
+  isActive: 1
+  description: Open the door to the lobby using the access key
+  toolTip: Press the item's inventory number to equipe the keycard and then press
+    "Q" to open the door
+  expReward: 0
+  goalType: 2
+  itemToUse: {fileID: 11400000, guid: bc00b934ca966424eaa3fb3c1bebcc77, type: 2}
+  button: 113
+  killRequiredAmount: 0
+  gatheringRequiredAmount: 0
