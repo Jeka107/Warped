@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GroundCheck : MonoBehaviour
@@ -17,6 +15,7 @@ public class GroundCheck : MonoBehaviour
         DrawNoiseArea();
     }
 
+    //drawing spehre around the player for better understanding if player is on ground.
     private void DrawNoiseArea()
     {
         if (groundCheckRadius > 0)

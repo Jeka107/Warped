@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -114,8 +113,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        GravityController.onGravityChange += PlayerRotationOn;
-
         _playerInput = GetComponent<PlayerInput>();
         _input = GetComponent<PlayerInputs>();
         _playerActions = GetComponent<PlayerActions>();
@@ -127,6 +124,8 @@ public class PlayerMovement : MonoBehaviour
         handL = handLAnimation?.gameObject;
 
         startYScale = playerIdle.transform.localScale.y;
+
+        GravityController.onGravityChange += PlayerRotationOn;//when gravity direction change.
     }
     private void OnDestroy()
     {
@@ -136,21 +135,26 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         // ground check
-        grounded = groundCheck.GetGrounded();
+        grounded = groundCheck.GetGrounded(); //checking if player is on ground.
 
         MyInput();
         SpeedControl();
         StateHandler();
         
-        if (rotate)
+        if (rotate)  //when gravity direction change.
         {
+            /*disable gravity and move to direction player choose*/
             rb.useGravity = false;
             rb.velocity = gravityChangeDirection * 2.5f;
+
+            //raycast to direction the player choose.when raycast hit the choosen layer player will rotate.
             if (Physics.Raycast(transform.position, gravityChangeDirection.normalized, playerHeight + 2f, gravityDirectionMask))
             {
+                /*pause the player*/
                 rb.isKinematic = true;
                 rb.velocity = Vector3.zero;
                 
+                /*rotate player*/
                 target = Quaternion.Euler(rotateDirection.x, rotateDirection.y, rotateDirection.z);
                 transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * smooth);
 
@@ -265,6 +269,7 @@ public class PlayerMovement : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(_input.mousePosition);
         RaycastHit hit;
 
+        //movement restriction when holding item.
         if ((Physics.Raycast(ray, out hit, stopDistanceCollider, layerMaskStop) && holdingItem)||(Physics.Raycast(ray, out hit, enemyStopDistanceCollider, enemyLayerMaskStop)))
         {
             Debug.DrawLine(ray.origin, hit.point);
@@ -372,8 +377,10 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Jump()
     {
-        _playerActions.QuestAction(KeyCode.Space);
+        _playerActions.QuestAction(KeyCode.Space);//learning to jump
+
         if (!questManager.GetIfKeyIsActiveFirstTime(KeyCode.Space)) { return; }
+
         exitingSlope = true;
 
         // reset y velocity
@@ -416,7 +423,7 @@ public class PlayerMovement : MonoBehaviour
         var signNum = directionProps._sign == SIGN.POSITIVE ? 1 : -1;
 
 
-        switch (directionProps._axis)
+        switch (directionProps._axis) //depends on which direction player choose,rotate in currect rotation.
         {
             case AXIS.X:
                 rotateDirection = new Vector3(0, 0, 90 * signNum);
@@ -455,7 +462,7 @@ public class PlayerMovement : MonoBehaviour
 
 
     #region Hands Animation
-    private void HandAnimation()
+    private void HandAnimation() //hands animation activate.
     {
         if (moveDirection != Vector3.zero)
         {
@@ -483,7 +490,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-    public void DisableAnimation()
+    public void DisableAnimation()//hands animation deactivate.
     {
         handRAnimation.WalkingAnimation(false);
 

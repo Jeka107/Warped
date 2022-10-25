@@ -45,14 +45,13 @@ public class MouseClickActions:MonoBehaviour
     {
         switch (hitObject?.tag)
         {
-            case "Shoot":
+            case "Shoot": //throw object with telekanisis.
                 hitObject.GetComponent<MoveObject>().ThrowObject();
                 handsAnimation.TelePullReleaseAnimation();
                 telekanesiesVisualEffect.SetActive(false);
-                //throwingSoundEffect.GetComponent<AudioSource>().Play();
                 playerActions.QuestAction(KeyCode.Mouse0);
                 break;
-            case "Wall":
+            case "Wall": //gravity direction change.
                 if (buttonHeld&&buttonHeld&&playerStats.playerMP >= GravityChangeMpCost)
                 {
                     playerActions.QuestAction(KeyCode.Mouse0);

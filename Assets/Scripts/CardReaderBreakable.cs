@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CardReaderBreakable : MonoBehaviour
@@ -8,9 +6,9 @@ public class CardReaderBreakable : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag=="PlayerWeapon")
+        if(other.tag=="PlayerWeapon")//when weapon collide with breakable cardreader.
         {
-            backDoor.SetActive(false);
+            backDoor.SetActive(false);//open door.
         }
     }
 }

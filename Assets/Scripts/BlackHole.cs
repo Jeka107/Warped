@@ -20,7 +20,7 @@ public class BlackHole : MonoBehaviour
         transform.position = Camera.main.transform.localPosition + Camera.main.transform.forward * 3 + new Vector3(0, 1f, 0);
         m_GravityRadius = GetComponent<SphereCollider>().radius;
 
-        rb.velocity = Camera.main.transform.forward * throwPower * Time.deltaTime ;
+        rb.velocity = Camera.main.transform.forward * throwPower * Time.deltaTime ; //throw blackhole to direction the player looking.
 
         GetComponent<AudioSource>().Play();
 

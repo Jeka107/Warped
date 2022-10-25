@@ -73,9 +73,9 @@ public class EnemyAI : MonoBehaviour
             playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
             
 
-            if (!playerInSightRange && !playerInAttackRange) Patroling();
-            if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-            if (playerInAttackRange && playerInSightRange) AttackPlayer();
+            if (!playerInSightRange && !playerInAttackRange) Patroling(); //if player isn't in range and attack range then patrol.
+            if (playerInSightRange && !playerInAttackRange) ChasePlayer();//if player is in range but not in attack range then chase player.
+            if (playerInAttackRange && playerInSightRange) AttackPlayer();//if player in range and in attack range then attack.
         }
     }
 
@@ -88,11 +88,12 @@ public class EnemyAI : MonoBehaviour
         {
             if (isDead) return;
 
-            if (!walkPointSet) SearchWalkPoint();
+            if (!walkPointSet) SearchWalkPoint(); //set next walkpoint.
 
             //Calculate direction and walk to Point
             if (walkPointSet)
             {
+                /*activate patroling animation*/
                 animator.SetBool("isWalking", true);
                 agent.SetDestination(walkPoint);
 
@@ -110,10 +111,10 @@ public class EnemyAI : MonoBehaviour
                 walkPointSet = false;
             }
         }
-        else if(!walkPointSet)
+        else if(!walkPointSet)//if enemy standing activate enemy idle animation.
             animator.SetBool("isWalking", false);
     }
-    private void SearchWalkPoint()
+    private void SearchWalkPoint()//set walkpoint randomly from walkpoint list.
     {
         if (walkPoints.Count >0)
         {
@@ -124,7 +125,7 @@ public class EnemyAI : MonoBehaviour
                 walkPointSet = true;
         }    
     }
-    private void ChasePlayer()
+    private void ChasePlayer() //set destination to player.
     {
         if (isDead) return;
 
@@ -141,7 +142,7 @@ public class EnemyAI : MonoBehaviour
 
         if (!alreadyAttacked)
         {
-            //Attack
+            //Attack animation
             animator.SetBool("isWalking", false);
             animator.SetBool("jawaAttack", true);
 
@@ -155,7 +156,7 @@ public class EnemyAI : MonoBehaviour
 
         alreadyAttacked = false;
     }
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage) //take damage from player.when health is 0 destroy enemy.
     {
         health -= damage;
 
@@ -165,16 +166,11 @@ public class EnemyAI : MonoBehaviour
 
             if (questObject != null)
             {
-                onKill?.Invoke(questObject.quest);
+                onKill?.Invoke(questObject.quest); //invoke event to check quest progress.
             }
 
             isDead = true;
             Destroy(gameObject);
-            //Invoke("Destroyy", 2.8f);
         }
-    }
-    private void Destroyy()
-    {
-        Destroy(gameObject);
     }
 }

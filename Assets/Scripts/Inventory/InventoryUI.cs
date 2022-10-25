@@ -10,12 +10,12 @@ public class InventoryUI : MonoBehaviour
 
     void Start()
     {
-        if (inventorySystem.inventory.Count != 0)
+        if (inventorySystem.inventory.Count != 0) //draw current inventory UI.
         {
             DrawInventory();
         }
 
-        InventorySystem.OnChange += OnUpdateInventory;
+        InventorySystem.OnChange += OnUpdateInventory; //when inventoy changes then update UI.
     }
     private void OnDestroy()
     {
@@ -24,32 +24,32 @@ public class InventoryUI : MonoBehaviour
 
     private void OnUpdateInventory()
     {
-        foreach (Transform t in transform)
+        foreach (Transform t in transform)//destoy current inventory UI.
         {
             Destroy(t.gameObject);
         }
-        DrawInventory();
+        DrawInventory();//draw new one.
     }
 
     public void DrawInventory()
     {
         int slotNum = 1;
 
-        foreach (InventoryItem item in inventorySystem.inventory)
+        foreach (InventoryItem item in inventorySystem.inventory) //getting each item in the inventory system list.
         {
             if (slotNum <= inventorySystem.inventory.Count)
-                item.SlotNum(slotNum);
+                item.SlotNum(slotNum);//updating slot number.
 
-            AddInventorySlot(item);
+            AddInventorySlot(item); //addin new item slot.
 
-            if (this.item == item)
+            if (this.item == item)//when item selected.
             {
                 slot.GetComponent<ItemSlot>().ActivateSelected();
             }
             slotNum++;
         }
     }
-    public void AddInventorySlot(InventoryItem item)
+    public void AddInventorySlot(InventoryItem item) //addint new item slot as children to inventory.
     {
         GameObject obj = Instantiate(slotPrefab);
         obj.transform.SetParent(transform, false);
@@ -59,16 +59,16 @@ public class InventoryUI : MonoBehaviour
     }
     public void SelectedItem(InventoryItem item)
     {
-        foreach (Transform slot in GetComponentInChildren<Transform>())
+        foreach (Transform slot in GetComponentInChildren<Transform>()) //unselect all items.
         {
             slot.GetComponent<ItemSlot>().DeActivateSelected();
         }
-        foreach (Transform slot in GetComponentInChildren<Transform>())
+        foreach (Transform slot in GetComponentInChildren<Transform>())//activate selected item.
         {
-            if (slot.GetComponent<ItemSlot>()?.item == item)
+            if (slot.GetComponent<ItemSlot>()?.item == item)//when current item equels to what player selected.
             {
                 this.item = item;
-                slot.GetComponent<ItemSlot>().ActivateSelected();
+                slot.GetComponent<ItemSlot>().ActivateSelected();//if does then activate selected.
                 return;
             }
         }

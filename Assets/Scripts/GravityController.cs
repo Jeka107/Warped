@@ -44,7 +44,7 @@ public class GravityController:MonoBehaviour
 
         else
         {
-            foreach (GameObject gameObject in draggableObjects)
+            foreach (GameObject gameObject in draggableObjects) //cancel gravity
             {
                 int x = Random.Range(0, 3);
                 int y = Random.Range(0, 3);
@@ -61,7 +61,7 @@ public class GravityController:MonoBehaviour
         
         onGravityStatus?.Invoke(true);
     }
-    public void GravityCancelDeActive()//Activate gravitation no depends on radius
+    public void GravityCancelDeActive()//Activate gravitation not depends on radius
     {
         foreach (MoveObject moveObject in FindObjectsOfType<MoveObject>())
         {
@@ -73,10 +73,10 @@ public class GravityController:MonoBehaviour
     }
     public void GravityDirection(Vector3 hitObjectPoint,Vector3 hitPoint)
     {
-        directionProps = DirectionCalc(hitObjectPoint,hitPoint);
-        var _gravity = directionProps._sign == SIGN.POSITIVE ? gravity : -gravity;
+        directionProps = DirectionCalc(hitObjectPoint,hitPoint); //calc direction
+        var _gravity = directionProps._sign == SIGN.POSITIVE ? gravity : -gravity; //check direction gravity sign.
 
-        switch (directionProps._axis)
+        switch (directionProps._axis)//gravity direction.
         {
             case AXIS.X:
                 direction = new Vector3(_gravity, 0, 0);
@@ -92,6 +92,7 @@ public class GravityController:MonoBehaviour
         player.SetGravityDirection(direction);
         onGravityChange?.Invoke();
 
+        /*if player finished quest then activate the power normaly other wise activate power with room limits.*/
         if (questData.isComplete)
         {
             foreach (MoveObject moveObject in UnityEngine.Object.FindObjectsOfType<MoveObject>())
@@ -101,7 +102,7 @@ public class GravityController:MonoBehaviour
                 GravityDirectionAction(direction);
             }
         }
-        else if(rooms!=null) // the problem in the floating lockers might be here!!!
+        else if(rooms!=null)
         {
             foreach (MoveObject moveObject in rooms.GetComponentsInChildren<MoveObject>())
             {
@@ -150,7 +151,7 @@ public class GravityController:MonoBehaviour
     {
         draggableObjects.Remove(draggable);
     }
-    public bool CheckIfDraggableObjectsEmpty()
+    public bool CheckIfDraggableObjectsEmpty()//checkin to know if activate the power or not.
     {
         if (draggableObjects.Count == 0)
             return true;

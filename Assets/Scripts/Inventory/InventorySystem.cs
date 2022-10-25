@@ -33,17 +33,17 @@ public class InventorySystem : MonoBehaviour
     }
     public void Add(InventoryItemData data)//add item to inventory
     {
-        if(itemDictionry.TryGetValue(data,out InventoryItem value))
+        if(itemDictionry.TryGetValue(data,out InventoryItem value)) //if player already has this item thes add to stack.
         {
             value.AddToStack();
         }
-        else
+        else //if not then add to inventory.
         {
             InventoryItem newItem = new InventoryItem(data,inventory.Count+1);
             inventory.Add(newItem);
             itemDictionry.Add(data, newItem);
         }
-        OnChange?.Invoke();
+        OnChange?.Invoke(); //on change invoke event to update inventory UI.
     }
     public void Remove(InventoryItemData data)//remove item from inventory
     {
@@ -61,8 +61,11 @@ public class InventorySystem : MonoBehaviour
                     item.SlotNum(inventory.Count);
                 }
             }
+            /*else
+             * decrease stack number.
+                */
         }
-        OnChange?.Invoke();
+        OnChange?.Invoke();//on change invoke event to update inventory UI.
     }
     public InventoryItem ItemUse(int i)//hold choosen item
     {

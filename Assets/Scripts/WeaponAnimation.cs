@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponAnimation : MonoBehaviour
 {
     private Animator animator;
 
+    //attacking animation
     private void Awake()
     {
         animator = GetComponent<Animator>();

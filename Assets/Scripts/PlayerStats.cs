@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -57,17 +56,17 @@ public class PlayerStats : MonoBehaviour
         tempColor.a = BloodOpacity;
         bloodImage.color = tempColor;
         BloodOpacity = 1 - (playerHP * 0.01f);
-        //Debug.Log(BloodOpacity);
-       
+        
         time += Time.deltaTime;
         var seconds = time % 60;//count seconds
 
+        //reset hp and mp after time.
         if(seconds >= timeOfResetHP&& playerHP<=maxHp&& seconds >= timeOfResetMP && playerMP <= maxMp)
         {
             StartCoroutine(IncreasStatsOnRest());
         }
     }
-    IEnumerator IncreasStatsOnRest()
+    IEnumerator IncreasStatsOnRest() //when player rest increase his stats.
     {
         if (playerHP < maxHp)
         {
@@ -79,7 +78,7 @@ public class PlayerStats : MonoBehaviour
         }
         yield return new WaitForSeconds(waitTimeBetweenAdd);//time between adding.
     }
-    public bool IncreaseHp()
+    public bool IncreaseHp() //used when collectin bandges.
     {
         var healthBoost = bandages.healthBoost;
         CheckStats(potions.Hp);
@@ -94,7 +93,7 @@ public class PlayerStats : MonoBehaviour
         }
         return false;
     }
-    public void ReduceHp(int healthReduce)
+    public void ReduceHp(int healthReduce) //when player get hit reduce HP.
     {
         playerHP -= healthReduce;
         time = 0;
@@ -109,7 +108,7 @@ public class PlayerStats : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public bool IncreaseMp()
+    public bool IncreaseMp()//used when collectin adrenalin.
     {
         var adrenalinBoost = adrenalin.manaBoost;
         CheckStats(potions.Mp);
@@ -124,7 +123,7 @@ public class PlayerStats : MonoBehaviour
         }
         return false;
     }
-    public void ReduceMp(int adrenalinReduce)
+    public void ReduceMp(int adrenalinReduce)//when player use power reduce MP.
     {
         time = 0;
         if (!(playerMP<=0))

@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.Playables;
 
 public class QuestManager : MonoBehaviour
 {
@@ -36,17 +34,17 @@ public class QuestManager : MonoBehaviour
     {
         InitialTextExplationForKeyDict();
 
-        if(gameManager.GetLevel() != 1)
+        if(gameManager.GetLevel() != 1) //check level
         {
             List<KeyCode> keys = new List<KeyCode>(explationForKey.Keys);
 
+            //after level 1 all skills activated.
             foreach (KeyCode keyCode in keys)
             {
                 explationForKey[keyCode] = true;
             }
         }
     }
-
     private void Start()
     {
         if(listOfQuestData.Count!=0)
@@ -61,6 +59,7 @@ public class QuestManager : MonoBehaviour
             director = listOfQuestData[questNumber].timeline;
             questText.text = quest.description; //
         }
+
         onQuestComplete += UpdateQuest;
         playerActions.onPress += CheckQuest;
         playerActions.onQuest += QuestComplete;
@@ -86,10 +85,7 @@ public class QuestManager : MonoBehaviour
 
     private void CheckQuest(KeyCode button,GameObject hitObject)
     {
-        if (director != null)
-            director.GetComponent<TimeLinePlayer>()?.StartTimeline();
-        
-        if (explationForKey.ContainsKey(button))
+        if (explationForKey.ContainsKey(button)) //first time key used in correct quest set key to true.
         {
             explationForKey.TryGetValue(button, out bool isActive);
 
@@ -103,7 +99,7 @@ public class QuestManager : MonoBehaviour
         QuestComplete();
     }
 
-    public bool GetIfKeyIsActiveFirstTime(KeyCode button)
+    public bool GetIfKeyIsActiveFirstTime(KeyCode button) //check key status if player can use it or not.
     {
         if (explationForKey.ContainsKey(button))
         {
@@ -113,7 +109,7 @@ public class QuestManager : MonoBehaviour
         return true;
     }
 
-    private void UpdateQuest()
+    private void UpdateQuest() //update quest UI.
     {
         questText.text = quest.description;
 
@@ -132,7 +128,7 @@ public class QuestManager : MonoBehaviour
     public void QuestComplete()
     {
         if (director != null)
-            director.GetComponent<TimeLinePlayer>()?.StartTimeline();
+            director.GetComponent<TimeLinePlayer>()?.StartTimeline();//activate timeline when quest finished.
 
         subtitles.SetActive(true);
         subtitleText.text = quest.subtitleText;

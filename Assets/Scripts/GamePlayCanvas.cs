@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -40,7 +38,7 @@ public class GamePlayCanvas : MonoBehaviour
         pressQText.SetActive(false);
     }
 
-    public void ShowQuestPressText()
+    public void ShowQuestPressText() //update quest text and activate UI.
     {
         var quest = questManager?.quest;
 

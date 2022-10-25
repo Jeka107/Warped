@@ -7,9 +7,9 @@ public class EndLevelScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player"))//on collide with player,loading next scene.
         {
-            InventoryRemember.Remember(inventorySystem);
+            InventoryRemember.Remember(inventorySystem); //remember inventory from prev scene.
             gameManager.LoadNexTScene();
             gameManager.SetLevel();
         }

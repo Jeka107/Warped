@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Bandages_Script : MonoBehaviour
@@ -16,7 +14,7 @@ public class Bandages_Script : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player")) //pick up item when player collides with it.
         {
             itemObject.OnPickUp();
         }

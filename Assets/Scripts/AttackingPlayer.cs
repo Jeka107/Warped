@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackingPlayer : MonoBehaviour
@@ -9,7 +7,7 @@ public class AttackingPlayer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy"))//on collide with enemy,hit enemy and reduce enemy's HP.
         {
             other.GetComponent<EnemyAI>()?.TakeDamage(damage);
             alienBeingHitSound.Play();

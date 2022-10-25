@@ -1,3 +1,6 @@
+
+/*used for gravity direction*/
+
 public enum SIGN { POSITIVE, NEGATIVE};
 public enum AXIS { X, Y, Z };
 

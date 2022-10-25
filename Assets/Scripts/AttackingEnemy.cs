@@ -7,7 +7,7 @@ public class AttackingEnemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player")) //on collide with player,hit player and reduce player's HP.
         {
             other.GetComponentInParent<PlayerStats>()?.ReduceHp(damage);
             Debug.Log("hit");

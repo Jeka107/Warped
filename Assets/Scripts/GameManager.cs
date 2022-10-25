@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Debug.Log("pressed");
     }
-    public void StartGame()//put on start button
+    public void StartGame()//put on start button to start the game.
     {
         startButton.Play();
         headline.SetActive(false);
@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("Lobby");
     }
-    IEnumerator CheckTimelineFinished()//when time line finished callin function to load next level.
+    IEnumerator CheckTimelineFinished()//when time line finished calling function to load next level.
     {
         var timeline = FindObjectOfType<TimeLinePlayer>();
         timeline.StartTimeline();

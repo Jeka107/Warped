@@ -6,7 +6,7 @@ public class ItemObject : MonoBehaviour
 
     public void OnPickUp()
     {
-        FindObjectOfType<InventorySystem>().Add(referenceItem);
+        FindObjectOfType<InventorySystem>().Add(referenceItem); //adding item to inventory system.
         Destroy(gameObject);
     }
 }

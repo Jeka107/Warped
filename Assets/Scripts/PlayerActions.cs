@@ -92,6 +92,7 @@ public class PlayerActions : MonoBehaviour
 		
 		RaycastHit hit;
 
+		//show text UI depends on which object player looking at.
 		if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
 		{
 			Debug.DrawLine(ray.origin, hit.point);
@@ -122,12 +123,6 @@ public class PlayerActions : MonoBehaviour
 				{
 					gamePlayCanvas.ShowQuestPressText();
 				}
-			
-				/*else if ((hit.collider.CompareTag("Draggable")) && !(currentQuest == hitObject.GetComponent<QuestObject>()?.quest))
-				{
-					gamePlayCanvas.HideQuestPressText();
-					gamePlayCanvas.ShowPressEText(); //call function to show Press E
-				}*/
 
 				else if (((hit.collider.CompareTag(ITEM_COLLECT_TAGS.Collectable.ToString())) ||
 					(hit.collider.CompareTag(ITEM_COLLECT_TAGS.AttackCollectable.ToString())) ||
@@ -143,12 +138,12 @@ public class PlayerActions : MonoBehaviour
 	#region MouseActions
 	public void MouseActions()
 	{
-		if (Enum.TryParse(typeof(KEY_CODES),keyCode.ToString(),out object key))
+		if (Enum.TryParse(typeof(KEY_CODES),keyCode.ToString(),out object key))//if activate telekanisis or gravity change skill.
 		{
 			keyCode = KeyCode.None;
 			mouseClickActions.MouseActionSkill();	
 		}
-		else if(holdingItem?.data.itemPrefab.tag==ITEM_COLLECT_TAGS.AttackCollectable.ToString())
+		else if(holdingItem?.data.itemPrefab.tag==ITEM_COLLECT_TAGS.AttackCollectable.ToString()) //else do simple attack.
         {
 			mouseClickActions.MouseActionAttack();
 		}
@@ -161,12 +156,13 @@ public class PlayerActions : MonoBehaviour
 		QuestAction(KeyCode.E);
 		if (!questManager.GetIfKeyIsActiveFirstTime(KeyCode.E)) { return; }
 
-		if (/*gamePlayCanvas.checkE &&*/ (GetComponent<PlayerStats>().playerMP >= TelekinesisMpCost))
+		if ((GetComponent<PlayerStats>().playerMP >= TelekinesisMpCost))//if player got enough MP.
 		{
 			buttonHeldDown = false;
 			mouseClickActions.SetButtonPressed(buttonHeldDown);
 			hitObject.GetComponent<MoveObject>()?.MoveToPlayer(hitObject);
 
+			//activate object to move to player and play animation and effects..
 			if (hitObject.GetComponent<MoveObject>())
 			{
 				handsAnimation.TelePullAnimation();
@@ -202,14 +198,16 @@ public class PlayerActions : MonoBehaviour
     {
 		keyCode = KeyCode.F;
 		QuestAction(KeyCode.F);
-		if (!questManager.GetIfKeyIsActiveFirstTime(KeyCode.F) &&!buttonHeldDown) { return; }
+		if (!questManager.GetIfKeyIsActiveFirstTime(KeyCode.F) &&!buttonHeldDown) { return; } //checkin if button can press down.
 
-		if (!activateSkill)
+		if (!activateSkill) //if skill not activated.
 		{
-			gravityController.GravityCancelActive();
+			gravityController.GravityCancelActive(); //activate skill.
 
-			if (!gravityController.CheckIfDraggableObjectsEmpty())
+			if (!gravityController.CheckIfDraggableObjectsEmpty())//checking if there is draggable object in range.
 			{
+
+				//activate skill and reduce mp.
 				GetComponent<PlayerStats>().ReduceMp(GravityCancelMpCost);
 				activateSkill = true;
 				gravityCancleVisualEffect.SetActive(true);
@@ -217,6 +215,7 @@ public class PlayerActions : MonoBehaviour
 		}
 		else
 		{
+			//deactivate skill but don't reduce MP.
 			gravityController.GravityCancelDeActive();
 			activateSkill = false;
 			gravityCancleVisualEffect.SetActive(false);
@@ -227,8 +226,9 @@ public class PlayerActions : MonoBehaviour
 	#region Action-R button
 	public void BlackHole()
     {
-		if (GetComponent<PlayerStats>().playerMP >= BlackholeMpCost)
+		if (GetComponent<PlayerStats>().playerMP >= BlackholeMpCost)//if player got enough mp.
 		{
+			//activate skill and animation.
 			handsAnimation.BlackHoleAnimation();
 			Instantiate(blackHole);
 			GetComponent<PlayerStats>().ReduceMp(BlackholeMpCost);
@@ -242,6 +242,7 @@ public class PlayerActions : MonoBehaviour
 	{
 		QuestAction(KeyCode.Q);
 
+		//do action depends on object the player looking at.
 		if (hitObject.tag == ITEM_COLLECT_TAGS.Collectable.ToString()|| hitObject.tag == ITEM_COLLECT_TAGS.AttackCollectable.ToString())
 		{
 			hitObject.GetComponent<ItemObject>()?.OnPickUp();
@@ -258,11 +259,12 @@ public class PlayerActions : MonoBehaviour
 	public void QuestAction(KeyCode keyCode)
 	{
 		currentQuest = questManager?.quest;
+
 		if (currentQuest != null)
 		{
 			if (currentQuest.button == keyCode)
 			{
-				switch (currentQuest.goalType)
+				switch (currentQuest.goalType)//check quest depends on quest type.
 				{
 					case GOALTYPE.ActionOnObject:
 						if (currentQuest == hitObject.GetComponent<QuestObject>()?.quest && currentQuest.button == KeyCode.E)
@@ -296,7 +298,7 @@ public class PlayerActions : MonoBehaviour
 			
 		}
 	}
-	public void QuestAction(Quest quest)
+	public void QuestAction(Quest quest)//used to check kill enemy type quest.
 	{
 		currentQuest = questManager?.quest;
 		if (currentQuest != null)
@@ -323,6 +325,8 @@ public class PlayerActions : MonoBehaviour
 		if (holdingItem != null)
 		{
 			SelectedItem(holdingItem);
+
+			//bandages and adrenalin are Consumeble items.
 			if (holdingItem.data.itemPrefab.tag== ITEM_COLLECT_TAGS.ConsumeCollectable.ToString())
 			{
 				var itemValue = inventorySystem.Get(holdingItem.data);
@@ -354,15 +358,16 @@ public class PlayerActions : MonoBehaviour
 					}
 				}
 			}
+			//weapon
 			else if (holdingItem.data.itemPrefab.tag == ITEM_COLLECT_TAGS.AttackCollectable.ToString())
             {
 				playerMovement.SetLHandWeapon();
 				lHand.SetActive(false);
 				lHandWithWeapon.SetActive(true);
 			}
-			else if(holdingItem.data.itemPrefab.tag == ITEM_COLLECT_TAGS.Collectable.ToString())
+			//item that not consumed by the player.
+			else if (holdingItem.data.itemPrefab.tag == ITEM_COLLECT_TAGS.Collectable.ToString())
             {
-				//item that not consumed by the player.
 				playerMovement.SetLeftHand();
 				lHand.SetActive(true);
 				lHandWithWeapon.SetActive(false);
@@ -375,7 +380,7 @@ public class PlayerActions : MonoBehaviour
 			lHandWithWeapon.SetActive(false);
 		}
 	}
-	private void SelectedItem(InventoryItem holdingItem)
+	private void SelectedItem(InventoryItem holdingItem) //interface for selected item.
 	{
 		inventoryUI.SelectedItem(holdingItem);
 	}

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CockPointTriggerOff : MonoBehaviour
@@ -8,7 +6,7 @@ public class CockPointTriggerOff : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player")//on collide with player ,player is not in cockpit.
         {
             gravityController.cockPitRoom = false;
         }

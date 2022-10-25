@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Adrenalin_Script : MonoBehaviour
@@ -13,7 +11,7 @@ public class Adrenalin_Script : MonoBehaviour
     {
         itemObject = GetComponent<ItemObject>();
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other) //pick up item when collide.
     {
         if (other.CompareTag("Player"))
         {

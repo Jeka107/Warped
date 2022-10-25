@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CockPointTriggerOn : MonoBehaviour
@@ -8,7 +6,7 @@ public class CockPointTriggerOn : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag=="Player")
+        if(other.tag=="Player")//on collide with player,player is in cockpit.
         {
             gravityController.cockPitRoom = true;
         }

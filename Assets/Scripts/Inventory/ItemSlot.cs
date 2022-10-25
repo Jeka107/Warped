@@ -13,14 +13,14 @@ public class ItemSlot : MonoBehaviour
     [SerializeField] private GameObject selected;
     [HideInInspector] public InventoryItem item;
 
-    public void Set(InventoryItem item)
+    public void Set(InventoryItem item) //setting new item slot.
     {
         this.item = item;
         icon.sprite = item.data.icon;
         itemLabel.text = item.data.displayName;
         slotNum.text = item.slotNum.ToString();
 
-        if (item.stackSize<=1)
+        if (item.stackSize<=1) //checking item stack
         {
             stackObj.SetActive(false);
             return;
@@ -29,7 +29,8 @@ public class ItemSlot : MonoBehaviour
         {
             stackObj.SetActive(true);
         }
-        stackLabel.text = item.stackSize.ToString();
+
+        stackLabel.text = item.stackSize.ToString();//updating stack text number.
     }
     public void SetNumberSlot(int num)
     {

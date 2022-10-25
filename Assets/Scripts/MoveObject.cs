@@ -34,10 +34,9 @@ public class MoveObject : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, Camera.main.transform.position, pullPower*Time.deltaTime);
         }
-        else if (holdingObject && this.tag == "Shoot")//set draggable object infront.
+        else if (holdingObject && this.tag == "Shoot")//set draggable object infront and follow smoothly.
         {
             var followPosition = Camera.main.transform.localPosition + Camera.main.transform.forward * 5 + Vector3.up;
-            //transform.position =new Vector3(followPosition.x, followPosition.y, followPosition.z);
 
             transform.position = Vector3.SmoothDamp(transform.position, followPosition,ref velocity, smooth * Time.deltaTime);
             rb.velocity = Vector3.zero;
@@ -47,7 +46,7 @@ public class MoveObject : MonoBehaviour
         
     }
     
-    public void MoveToPlayer(GameObject hitObject)
+    public void MoveToPlayer(GameObject hitObject) //deavtivate physics on object.
     {
         moveToPlayer = true;
         this.hitObject = hitObject;
@@ -58,7 +57,7 @@ public class MoveObject : MonoBehaviour
         stopMovingObject.SetActive(true);
         LayerChangeItemHold();
     }
-    public void ThrowObject()
+    public void ThrowObject() //throw object in direction player looking.
     {
         if (doAction)
         {
@@ -87,19 +86,19 @@ public class MoveObject : MonoBehaviour
             holdingObject = true;
             playerActions.SetKeyCode(KeyCode.E);
         }
-        if(other.tag==Enums.HIT_OBJECT_TAGS.Ground.ToString())
+        if(other.tag==Enums.HIT_OBJECT_TAGS.Ground.ToString()) //can't throw object when player is too close to walls.
         {
             doAction = false;
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == Enums.HIT_OBJECT_TAGS.Ground.ToString())
+        if (other.tag == Enums.HIT_OBJECT_TAGS.Ground.ToString())//can throw object on trigger exit.
         {
             doAction = true;
         }
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)//when object collide activate physics on collision object.
     {
         if ((collision.gameObject.tag == Enums.HIT_OBJECT_TAGS.Draggable.ToString())||
             (collision.gameObject.tag == "Player") && rb.velocity != Vector3.zero)

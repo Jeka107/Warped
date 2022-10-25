@@ -17,7 +17,7 @@ public class TinelineTrigger : MonoBehaviour
         director.played += Played;
         director.stopped += Stoped;
     }
-    private void Played(PlayableDirector ctx)
+    private void Played(PlayableDirector ctx)//if time line is playing de activate player's movement,animation and canvas.
     {
         if (player && canvas)
         {
@@ -26,7 +26,7 @@ public class TinelineTrigger : MonoBehaviour
             canvas.SetActive(false);
         }
     }
-    private void Stoped(PlayableDirector ctx)
+    private void Stoped(PlayableDirector ctx)//if time line is stoped activate player's movement,animation and canvas.
     {
         if (player && canvas)
         {
@@ -38,7 +38,7 @@ public class TinelineTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag=="Player")
+        if(other.tag=="Player")//on trigger with player playr timeline.
         {
             director.Play();
         }

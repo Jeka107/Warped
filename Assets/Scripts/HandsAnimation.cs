@@ -1,12 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HandsAnimation : MonoBehaviour
 {
     private Animator handsAnimator;
 
+    //controlling hands animation depends with action.
     private void Start()
     {
         handsAnimator = GetComponent<Animator>();
