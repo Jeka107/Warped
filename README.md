@@ -6,8 +6,6 @@ Work in a team of 7 people as lead unity devloper for 3 months.
 Better experience with GitHub and ClickUp platform.
 The goal was to experience with physics engine and player movement.
 
-The project in work progress.
-
 My part in the project:
 
 Player movement and actions.
